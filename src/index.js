@@ -3,37 +3,31 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {counter: 0, toggleVisibility: true};
 
-const counterReducer = (state = {counter: 0, toggleVisibility: true}, action) =>
-{
-  switch (action.type){
-    case "Increment":
-      return {
-        counter: state.counter + 1,
-        toggleVisibility: state.toggleVisibility
-      };
-    case "Decrement": 
-      return {
-        counter: state.counter - 1,
-        toggleVisibility: state.toggleVisibility
-      };
-    case "ChangeToggleVisibility":
-      return {
-        counter: state.counter,
-        toggleVisibility: !state.toggleVisibility
-      }
-    case "ChangeVisibility":
-      return {
-        counter: state.counter + action.payload.value,
-        toggleVisibility: state.toggleVisibility
-      }
-    default: 
-      return state;
+const counterSliceReducer = createSlice({
+  name: 'counter',
+  initialState,
+  reducers: {
+    Increment (state) {
+      state.counter += 1;
+    },
+    Decrement (state) {
+      state.counter -=1;
+    },
+    ChangeToggleVisibility (state) {
+      state.toggleVisibility = !state.toggleVisibility
+    },
+    IncreaseByValue (state, action) {
+      state.counter += action.payload
+    }
   }
-}
 
-const store = createStore( counterReducer )
+})
+
+const store = createStore( counterSliceReducer.reducer )
 
 
 ReactDOM.render(
@@ -42,3 +36,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+
+export { counterSliceReducer, }

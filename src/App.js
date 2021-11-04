@@ -1,20 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
-
+import { counterSliceReducer } from './index';
 
 function App() {
   const dispatch = useDispatch();
   const counter =  useSelector(state => state.counter);
   const toggleVisibility = useSelector(state => state.toggleVisibility);
 
-  const incrementValue = ()=>{dispatch({type: "Increment"})}
-  const decrementValue = ()=>{dispatch({type: "Decrement"})}
-  const changeVisibility = ()=>{dispatch({type: "ChangeToggleVisibility"})}
-  const increaseByValue = ()=>{dispatch({
-    type: "ChangeVisibility",
-    payload: {
-      value: 5
-    }
-  })}
+  const incrementValue = ()=>{dispatch( counterSliceReducer.actions.Increment() )}
+  const decrementValue = ()=>{dispatch( counterSliceReducer.actions.Decrement() )}
+  const changeVisibility = ()=>{dispatch( counterSliceReducer.actions.ChangeToggleVisibility() )}
+  const increaseByValue = ()=>{dispatch( counterSliceReducer.actions.IncreaseByValue(5) )}
   
   return (
     <div>
